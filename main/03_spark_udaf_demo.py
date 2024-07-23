@@ -111,7 +111,7 @@ if __name__ == '__main__':
     # C3\C4本身存在才可以
     @F.pandas_udf(returnType=FloatType())
     def spark_udaf_func(c3: Series, c4: Series) -> float:
-        # 计算逻辑：当c2=1，则 c4=1；否则c4 = (上一个c4 + 当前的c3)/2
+        # 计算逻辑：当c3=1，则 c4=1；否则c4 = (上一个c4 + 当前的c3)/2
         # 要求C4，搞临时变量。上一次C4，首次时C4为
         tmp_c4 = 0
         # 不知道C3列list或者说列表的长度不知道，不知道要迭代多少次，使用分组操作后，这个循环只作用在组上
