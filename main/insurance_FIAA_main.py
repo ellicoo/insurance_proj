@@ -31,8 +31,9 @@ spark = SparkSession.builder.appName("insurance_FIAA_main") \
     .enableHiveSupport() \
     .getOrCreate()
 
-#2.工具类
-#功能: 读取外部SQL脚本文件, 识别每一个SQL语句, 去重SQL中空行注释, 然后执行SQL语句  如果SQL以select开头, 打印其返回的结果
+
+# 2.工具类
+# 功能: 读取外部SQL脚本文件, 识别每一个SQL语句, 去重SQL中空行注释, 然后执行SQL语句  如果SQL以select开头, 打印其返回的结果
 def executeSQLFile(filename):
     with open(r'../sql_script/' + filename, 'r') as f:
         # 读取文件中所有行数据, 得到一个列表,列表中每一个元素就是一行行数据
@@ -65,10 +66,9 @@ def executeSQLFile(filename):
                     df.show()
 
 
-#3.执行SQL文件
+# 3.执行SQL文件
 # executeSQLFile('01_insurance_ods_table.sql')
 executeSQLFile('02_insurance_dw_table.sql')
-
 
 # 4.关闭SparkSession对象
 spark.stop()

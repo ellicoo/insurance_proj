@@ -46,6 +46,8 @@ if __name__ == '__main__':
     # 2.数据输入
     # header：是否使用文件中的第一行作为DF的Schema
     # inferSchema：自动推断数据类型
+    # spark.read.csv 方法通常用于读取 CSV 格式的文件，而不是纯文本文件（.txt）。
+    # 但是，如果 .txt 文件的内容结构类似于 CSV 文件（逗号分隔值),可以使用 spark.read.csv 来读取这些文件
     input_df = spark.read.csv(path='../data/user.txt', sep=',', header=True, inferSchema=True)
 
 

@@ -66,7 +66,7 @@ if __name__ == '__main__':
 
     # 自定义处理函数
     @F.pandas_udf(returnType=FloatType())
-    def spark_udaf_func(lx_d: Series, dx_d: Series,dx_ci: Series) -> float:
+    def spark_udaf_func(lx_d: Series, dx_d: Series, dx_ci: Series) -> float:
         # 计算逻辑：当第一保单年度时，即policy_year=1时，lx_d=1, dx_d=qx_d, dx_ci=qx_ci
         # 在第2及后续保单年度时，即policy_year>=2时
         # lx_d=上一年度的lx_d-上一年度的dx_d-上一年度的dx_ci

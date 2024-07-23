@@ -67,6 +67,7 @@ if __name__ == '__main__':
     from prem_src3;
     """)
 
+
     # 自定义处理函数
     @F.pandas_udf(returnType=FloatType())
     def spark_udaf_func(qx: Series, lx: Series) -> float:
@@ -83,7 +84,6 @@ if __name__ == '__main__':
 
 
     spark.udf.register("spark_udaf", spark_udaf_func)
-
 
     spark.sql("""
     create table if not exists insurance_dw.prem_src4
@@ -109,7 +109,6 @@ if __name__ == '__main__':
     """).show()
 
     # 4.数据输出
-
 
     # 5.关闭SparkContext
     spark.stop()

@@ -34,6 +34,7 @@ DataFrame的组成：
 
 """
 """
+UDAF--自定义聚合函数
 SparkSQL同时支持UDF和UDAF。但是对于Python而言，仅仅只支持UDF，不支持UDAF函数。
 
 如果想使用Python语言编写UDAF函数，则比需借助于Python的第三方包Pandas的UDF函数来实现。
@@ -136,4 +137,3 @@ if __name__ == '__main__':
 
     # 5.关闭SparkContext
     spark.stop()
-
