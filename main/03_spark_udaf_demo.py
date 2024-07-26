@@ -109,14 +109,27 @@ if __name__ == '__main__':
 
     # 要使用上一个C4
     # C3\C4本身存在才可以
-    # 这个UDAF是对每个分组数据的聚合算出c4，不是逐行的聚合
-    # 与UDF不同，它是将整个分组的某个列作为参数输入，即Series对象是
+
     # Series 是 Pandas 的一维数组，不是python的数组
     # Spark 中的 pandas_udf 是一种分布式操作
     # spark.sql.function中的pandas是分布式操作的pandas，跟非spark的独立Pandas类型相同，仅仅分布式不同，独立pandas是单机处理的
     # 「注意」在 Spark 中使用 pandas_udf 来处理 DataFrame 的原因主要是为了结合 Pandas 的灵活性和 Spark 的分布式计算能力，
     # 虽然 Spark 自身的 API 已经非常强大，但在某些情况下，Pandas 的操作可能更简洁和高效。
     # 许多数据科学和数据分析库（如 Scikit-learn）都是基于 Pandas 的，可以直接在 pandas_udf 中使用这些库
+    """
+    这个UDAF是对每个分组数据的聚合算出c4，不是每行单独作为参数计算得出单独结果，而是整列作为数组输入到函数中，得出结果
+    与UDF不同，它是将整个分组的某个列作为参数输入，即Series对象是
+    @F.udf
+    基本概念：@F.udf 装饰器用于定义一个普通的用户定义函数（UDF），该函数将在每条记录上逐条执行。
+    执行方式：UDF 使用 Python 的原生函数逐条处理数据。由于逐条处理，每条记录的处理可能会有较高的开销，尤其是在数据量较大的情况下。
+    应用场景：适用于简单的、需要逐条处理的数据转换任务
+    
+    @F.pandas_udf
+    基本概念：@F.pandas_udf 装饰器用于定义一个 Pandas 用户定义函数（UDF），它使用 Apache Arrow 将数据从 Spark 的 JVM 进程高效地转换到 Python 的
+            Pandas 数据结构，并在 Pandas 数据框上进行批量操作。
+    执行方式：Pandas UDF 在每个分区上批量处理数据，而不是逐条处理。这种批量处理方式可以显著提高性能，尤其是在需要对数据进行复杂操作时。
+    应用场景：适用于复杂的数据处理任务，需要利用 Pandas 的强大功能和灵活性的场景
+    """
     @F.pandas_udf(returnType=FloatType())
     def spark_udaf_func(c3: Series, c4: Series) -> float:
         # 计算逻辑：当c3=1，则 c4=第一个元素；否则c4 = (上一个c4 + 当前的c3)/2
