@@ -53,6 +53,9 @@ if __name__ == '__main__':
 
     # 3.数据处理
     # 创建并初始化有效保单数lx列
+    # if与case when的区别：
+    # 对于简单的两个条件逻辑，CASE WHEN 和 IF 可以互相替换，但是当超过两个条件时，只能case when，
+    # 比如对于多个条件的情况，CASE WHEN 更加适合，因为它可以处理多个WHEN子句，而IF函数只能处理单个条件
     spark.sql("""
         create or replace view prem_src5_1 as
            select 
