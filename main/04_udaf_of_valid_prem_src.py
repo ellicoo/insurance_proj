@@ -43,7 +43,7 @@ if __name__ == '__main__':
     # 1.构建SparkSession
     # 建造者模式：类名.builder.配置…….getOrCreate()
     # 自动帮你构建一个SparkSession对象，只要指定你需要哪些配置就可
-    spark = SparkSession.builder.appName("04_udaf_of_ valid_prem_src") \
+    spark = SparkSession.builder.appName("04_udaf_of_valid_prem_src") \
         .master("local[*]") \
         .config("spark.sql.shuffle.partitions", 4) \
         .config("spark.sql.warehouse.dir", "hdfs://node1:8020/user/hive/warehouse") \
